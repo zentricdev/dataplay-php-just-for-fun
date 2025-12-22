@@ -1,7 +1,5 @@
 # SkyNet and Terminator: A PHP Simulation
 
-# SkyNet and Terminator: A PHP Simulation
-
 This directory houses a **functional blueprint** that emulates the "Terminator" universe in a playful and educational way. The project serves a dual purpose: conceptually recreating a SkyNet mission within a hypothetical **PHP 11.4** environment, while acting as a practical case study for modern PHP techniques and architectural patterns.
 
 ## Thematic Context
@@ -76,8 +74,8 @@ The use of **static variables within recursion** allows the unit to track its at
 
 - **`DTOs/`**:
 
-  - `Target.php`: Structure for target data.
-  - `SpatioTemporalLocation.php`: Space-time coordinate definition.
+  - `Target.php`: Structure for target data (Sarah Connor).
+  - `SpatioTemporalLocation.php`: Space-time coordinate definition (Los Ángeles, 1984).
 
 - **`Exceptions/`**:
   - `SkyNetException.php`: Custom domain-specific exception.
@@ -88,7 +86,7 @@ Once the repository is downloaded and the dependencies are installed (via `compo
 
 The project includes a `Makefile` to simplify the interaction with the T-800 unit. To run the simulation and witness the temporal displacement and mission logs, execute `make terminator`:
 
-```bash
+```
 2029-07-11 22:38:14 BUILDING UNIT Terminator SERIES T-800 MODEL 101
 2029-07-11 22:38:15 TARGET SET TO Sarah Connor, Big Jeff's waitress, Born 1965
 1984-05-12 01:52:01 UNIT RELOCATED TO Lat: 34.0522, Lon: 118.2437, 1984-05-12 01:52:00 (America/Los_Angeles)
