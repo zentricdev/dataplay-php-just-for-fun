@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SkyNet;
 
+use DateInterval;
 use DateTime;
 use SkyNet\DTOs\SpatioTemporalLocation;
 use SkyNet\DTOs\Target;
@@ -20,12 +21,15 @@ final class Terminator extends Core
     protected ?Target $target = null;
     protected ?SpatioTemporalLocation $location = null;
     protected ?DateTime $timeline = null;
+    protected float $missionClock;
 
     public function __construct()
     {
-        $this->timeline = new DateTime('now');
+        $this->missionClock = microtime(true);
+        $this->timeline = new DateTime('2029-07-11 22:38:14');
 
         $this->log("BUILDING UNIT $this->unit SERIES $this->series MODEL $this->model");
+        sleep(1);
     }
 
     public static function build(): static
@@ -55,25 +59,40 @@ final class Terminator extends Core
     /** Infinite recursion because a Terminator has no plan B */
     public function accomplish(): void
     {
-        $this->log('ACQUIRING TARGET...');
+        static $attempts = 0;
 
         try {
-            $this->target = null;
-            $this->log('TARGET TERMINATED - MISSION ACCOMPLISHED');
-            $this->output(implode(PHP_EOL, $this->log));
+            while ($this->target !== null) {
+                $this->log('ACQUIRING TARGET...');
+                $attempts++;
+                sleep(  random_int(0, 2));
+                $success = random_int(0, 5) > 4;
+                if (! $success) {
+                    SkyNetException::throw('MISSION FAILED - TARGET ESCAPED');
+                }
+
+                $this->target = null;
+                $count = $attempts === 1 ? 'AT FIRST ATTEMPT' : "AFTER $attempts ATTEMPTS";
+                $this->log("MISSION ACCOMPLISHED - TARGET TERMINATED $count");
+            }
         } catch (SkyNetException $exception) {
-            $this->log("SYSTEM ERROR: {$exception->getMessage()}");
-            $this->log('I\'LL BE BACK');
+            $this->log("{$exception->getMessage()} - I'LL BE BACK");
             $this->accomplish();
         }
     }
 
     protected function log(string $message): void
     {
-        $timestamp = $this->timeline?->format('Y-m-d H:i:s');
+        $seconds = round(microtime(true) - $this->missionClock);
+        $interval = "PT{$seconds}S";
+        $timestamp = $this->timeline
+            ->add(new DateInterval($interval))
+            ->format('Y-m-d H:i:s');
+
         $color = "\033[0;32m";
         $reset = "\033[0m";
-        $this->log[] = "$timestamp {$color}$message{$reset}";
+        $this->log[] = $message = "$timestamp {$color}$message{$reset}";
+        $this->output($message);
     }
 
     protected function output(string $message): void
