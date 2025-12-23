@@ -12,7 +12,7 @@ composer require dataplay/php-just-for-fun
 
 ## Commands
 
-| command     | description                              |
-| ----------- | ---------------------------------------- |
-| `make help` | List available _make_ commands           |
-| `make t800` | Instantiate T-800 and accomplish mission |
+| command           | description                    |
+| ----------------- | ------------------------------ |
+| `make help`       | List available _make_ commands |
+| `make terminator` | Execute T-800 mission          |

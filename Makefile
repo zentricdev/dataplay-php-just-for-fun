@@ -20,11 +20,15 @@ terminator:
 	@echo
 
 help:
-	@echo "+-----------------+------------------------------------------+"
-	@echo "| Command         | Description                              |"
-	@echo "+-----------------+------------------------------------------+"
-	@echo "| make terminator | Instantiate T-800 and accomplish mission |"
-	@echo "+-----------------+------------------------------------------+"
+	@echo "+------------------+----------------------------------+"
+	@echo "| Command make...  | Description                      |"
+	@echo "+------------------+----------------------------------+"
+	@echo "| lint             | Run all static analysis tools    |"
+	@echo "| pint             | Fix code style (Pint)            |"
+	@echo "| phpstan          | Analyze code (Level 9)           |"
+	@echo "| composer-validate| Validate composer.json (strict)  |"
+	@echo "| terminator       | Execute T-800 mission            |"
+	@echo "+------------------+----------------------------------+"
 
 # Catch-all para que no de error al pasar argumentos
 %:

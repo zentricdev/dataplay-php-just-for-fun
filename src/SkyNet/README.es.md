@@ -46,7 +46,7 @@ Para garantizar la integridad de los datos, el proyecto utiliza DTOs inmutables:
 
 - **Recursión con Estado**: El método `accomplish()` utiliza la **recursión** para reflejar la naturaleza implacable de la máquina.
 
-- **Variables Estáticas**: En lugar de pasar el conteo de intentos como un argumento de la función (lo que saturaría la firma del método), el proyecto utiliza una variable `static $attempts` dentro del método. Esta técnica avanzada de PHP permite que la función "recuerde" su estado a través de llamadas recursivas, manteniendo un contador persistente a lo largo de múltiples bucles temporales sin exponerlo al mundo exterior. Esto demuestra un enfoque más limpio y encapsulado para la gestión del estado en algoritmos recursivos.
+- **Variables Estáticas**: En lugar de pasar el recuento de intentos como un argumento de la función (lo que saturaría la firma del método), el proyecto utiliza una variable `static $attempts` dentro del método. Esta técnica avanzada de PHP permite que la función "recuerde" su estado a través de llamadas recursivas, manteniendo un contador persistente a lo largo de múltiples bucles temporales sin exponerlo al mundo exterior. Esto demuestra un enfoque más limpio y encapsulado para la gestión del estado en algoritmos recursivos.
 
 ### 6. Manejo Semántico de Excepciones
 
@@ -58,7 +58,7 @@ Para garantizar la integridad de los datos, el proyecto utiliza DTOs inmutables:
 
 - **Ajuste Dinámico de la Línea de Tiempo**: El método `relocate()` realiza un cambio de estado interno crucial. Cuando el Terminator es desplazado, el reloj interno del sistema se sincroniza con la línea de tiempo del objetivo (`$this->timeline = $this->target->location->timeline`). Esto se refleja en los registros de ejecución, donde se puede observar el salto desde la fecha de origen en 2029 hasta la fecha de llegada del objetivo en 1984, simulando un desplazamiento temporal en tiempo real.
 
-- **Nota Técnica sobre el Registro**: El método `log()` no utiliza la hora actual del sistema. En su lugar, se basa en la propiedad interna `$timeline`, que se inicializa en el momento exacto en que SkyNet envía la unidad (11 de julio de 2029). Esto permite que los registros transiten de manera realista del futuro al pasado en el momento en que se ejecuta el método `relocate()`, manteniendo la coherencia cronológica con el canon de la película.
+- **Nota técnica sobre el registro (Logging)**: El método `log()` funciona de manera independiente a la hora del sistema anfitrión. En su lugar, calcula las marcas de tiempo combinando la propiedad interna `$timeline` —inicializada en el momento del despliegue (11 de julio de 2029)— con el `$missionClock`. Este reloj captura el `microtime()` exacto del inicio de la misión, permitiendo al sistema desplazar la fecha futura mediante los segundos transcurridos reales de la operación. Esto garantiza que los registros mantengan la coherencia cronológica con el canon de la película, incluso cuando la unidad transiciona del futuro al pasado durante la secuencia `relocate()`.
 
 ### 8. Divergencia y Persistencia de la Línea de Tiempo
 
@@ -88,7 +88,7 @@ Una vez que se descarga el repositorio y se instalan las dependencias (a través
 
 El proyecto incluye un `Makefile` para simplificar la interacción con la unidad T-800. Para ejecutar la simulación y presenciar el desplazamiento temporal y los registros de la misión, ejecuta `make terminator`:
 
-```
+```text
 2029-07-11 22:38:14 BUILDING UNIT Terminator SERIES T-800 MODEL 101
 2029-07-11 22:38:15 TARGET SET TO Sarah Connor, Big Jeff's waitress, Born 1965
 1984-05-12 01:52:01 UNIT RELOCATED TO Lat: 34.0522, Lon: 118.2437, 1984-05-12 01:52:00 (America/Los_Angeles)

@@ -58,7 +58,7 @@ To ensure data integrity, the project utilizes immutable DTOs:
 
 - **Dynamic Timeline Adjustment**: The `relocate()` method performs a crucial internal state change. When the Terminator is displaced, the system's internal clock synchronizes with the target's timeline (`$this->timeline = $this->target->location->timeline`). This is reflected in the execution logs, where you can observe the jump from the origin date in 2029 to the target's arrival date in 1984, simulating a real-time temporal displacement.
 
-- **Technical Note on Logging**: The `log()` method does not use the current system time. Instead, it relies on the internal `$timeline` property, which is initialized at the exact moment SkyNet sends the unit (July 11, 2029). This allows the logs to realistically transition from the future to the past the moment the `relocate()` method is executed, maintaining chronological consistency with the movie's canon.
+- **Technical Note on Logging**: The `log()` method operates independently of the host's system time. Instead, it calculates timestamps by combining the internal `$timeline` property—initialized at the moment of deployment (July 11, 2029)—with the `$missionClock`. This clock captures the exact `microtime()` of the mission's start, allowing the system to offset the future date by the actual elapsed seconds of the operation. This ensures that logs remain chronologically consistent with the movie's canon, even as the unit transitions from the future to the past during the `relocate()` sequence.
 
 ### 8. Timeline Divergence & Persistence
 
@@ -88,7 +88,7 @@ Once the repository is downloaded and the dependencies are installed (via `compo
 
 The project includes a `Makefile` to simplify the interaction with the T-800 unit. To run the simulation and witness the temporal displacement and mission logs, execute `make terminator`:
 
-```
+```text
 2029-07-11 22:38:14 BUILDING UNIT Terminator SERIES T-800 MODEL 101
 2029-07-11 22:38:15 TARGET SET TO Sarah Connor, Big Jeff's waitress, Born 1965
 1984-05-12 01:52:01 UNIT RELOCATED TO Lat: 34.0522, Lon: 118.2437, 1984-05-12 01:52:00 (America/Los_Angeles)
