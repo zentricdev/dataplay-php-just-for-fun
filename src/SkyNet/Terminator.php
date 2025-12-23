@@ -1,5 +1,7 @@
 <?php
 
+/** phpstan level 9 approved! */
+
 declare(strict_types=1);
 
 namespace SkyNet;

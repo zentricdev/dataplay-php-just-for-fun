@@ -1,6 +1,10 @@
+[**EN**](./README.md) | [ES](./README.es.md)
+
+---
+
 # SkyNet and Terminator: A PHP Simulation
 
-This directory houses a **functional blueprint** that emulates the "Terminator" universe in a playful and educational way. The project serves a dual purpose: conceptually recreating a SkyNet mission within a hypothetical **PHP 11.4** environment, while acting as a practical case study for modern PHP techniques and architectural patterns.
+This directory houses a **functional blueprint** that emulates the "Terminator" universe in a playful and educational way. The project serves a dual purpose: conceptually recreating a mission assigned to a Terminator unit within a hypothetical **PHP 11.4** environment, while acting as a practical case study for modern PHP techniques and architectural patterns.
 
 ## Thematic Context
 
