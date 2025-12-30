@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SkyNet;
+namespace J4F\SkyNet;
 
 abstract class Core
 {

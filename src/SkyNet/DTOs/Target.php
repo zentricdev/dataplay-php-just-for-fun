@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SkyNet\DTOs;
+namespace J4F\SkyNet\DTOs;
 
 final readonly class Target
 {

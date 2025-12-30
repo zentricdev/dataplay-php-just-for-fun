@@ -5,11 +5,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "SkyNet\\": "src/SkyNet/"
+            "J4F\\": "src/"
         }
     },
     "require": {
-        "php": "^8.4"
+        "php": "^8.4",
+        "symfony/console": "^8.0"
     },
     "require-dev": {
         "laravel/pint": "^1.26",

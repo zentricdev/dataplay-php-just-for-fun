@@ -4,13 +4,13 @@
 
 declare(strict_types=1);
 
-namespace SkyNet;
+namespace J4F\SkyNet;
 
 use DateInterval;
 use DateTime;
-use SkyNet\DTOs\SpatioTemporalLocation;
-use SkyNet\DTOs\Target;
-use SkyNet\Exceptions\SkyNetException;
+use J4F\SkyNet\DTOs\SpatioTemporalLocation;
+use J4F\SkyNet\DTOs\Target;
+use J4F\SkyNet\Exceptions\SkyNetException;
 
 final class Terminator extends Core
 {

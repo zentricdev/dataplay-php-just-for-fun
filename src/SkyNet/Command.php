@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace SkyNet;
+namespace J4F\SkyNet;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use DateTime;
 use DateTimeZone;
-use SkyNet\DTOs\SpatioTemporalLocation;
-use SkyNet\DTOs\Target;
+use J4F\SkyNet\DTOs\SpatioTemporalLocation;
+use J4F\SkyNet\DTOs\Target;
 
 Terminator::build()
     ->setTarget(target: new Target(
