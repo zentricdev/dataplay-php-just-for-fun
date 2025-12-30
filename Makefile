@@ -19,6 +19,11 @@ terminator:
 	@php ./src/SkyNet/Command.php
 	@echo
 
+payday:
+	@echo
+	@php ./src/PayDay/Command.php
+	@echo
+
 help:
 	@echo "+------------------+----------------------------------+"
 	@echo "| Command make...  | Description                      |"
@@ -28,6 +33,7 @@ help:
 	@echo "| phpstan          | Analyze code (Level 9)           |"
 	@echo "| composer-validate| Validate composer.json (strict)  |"
 	@echo "| terminator       | Execute T-800 mission            |"
+	@echo "| payday           | Execute Pay Day example          |"
 	@echo "+------------------+----------------------------------+"
 
 # Catch-all para que no de error al pasar argumentos
