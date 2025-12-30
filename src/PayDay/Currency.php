@@ -8,19 +8,23 @@ class Currency
 {
     public function __construct(
         public readonly string $code,
+        /** @var array<float> $coins */
         public readonly array $coins,
+        /** @var array<float> $notes */
         public readonly array $notes
     ) {}
 
-    public static function fromArray(array $config): static
+    /** @param array{code: string, coins: array<float>, notes: array<float>} $config */
+    public static function fromArray(array $config): self
     {
         return new self(
             $config['code'],
             $config['coins'],
-            $config['notes']);
+            $config['notes']
+        );
     }
 
-    public function type($value): string
+    public function type(float $value): string
     {
         return match (true) {
             \in_array($value / 100, $this->notes) => 'note',
@@ -29,10 +33,9 @@ class Currency
         };
     }
 
+    /** @return array<float|int> */
     public function denominations(): array
     {
-        // return [...$this->coins, ...$this->notes];
-
         return array_map(fn ($unit) => $unit * 100, [
             ...$this->coins,
             ...$this->notes,

@@ -6,14 +6,18 @@ namespace J4F\PayDay;
 
 class Cash
 {
+    /** @var array<float> */
     protected array $denominations = [];
+
+    /** @var array<int, array{count:int, denomination:float}> */
     protected array $breakdown = [];
+
     protected float $pending;
     protected bool $processing = false;
 
     public function __construct(protected Currency $currency) {}
 
-    protected function reset(float $amount)
+    protected function reset(float $amount): void
     {
         $this->pending = $amount * 100;
 
@@ -23,6 +27,7 @@ class Cash
         $this->breakdown = [];
     }
 
+    /** @return array<int, array{count:int, denomination:float}> */
     public function breakdown(float $amount): array
     {
         if (! $this->processing) {
@@ -50,10 +55,19 @@ class Cash
         return array_values($this->breakdown);
     }
 
+    /**
+     * @param  iterable<int, array<string, mixed>>  $collection
+     * @return array<int, array{count:int, denomination:float, type:string, amount: float}>
+     * */
     public function breakdownCollection(iterable $collection, ?string $attributeName = 'amount'): array
     {
         foreach ($collection as $item) {
-            $breakdown = $this->breakdown($item[$attributeName]);
+            $amount = $item[$attributeName] ?? 0.0;
+            if (! is_numeric($amount)) {
+                $amount = 0.00;
+            }
+
+            $breakdown = $this->breakdown((float) $amount);
 
             foreach ($breakdown as $result) {
                 $key = (string) $result['denomination'];
@@ -74,8 +88,8 @@ class Cash
             $item['amount'] = $item['count'] * $item['denomination'];
 
             return $item;
-        }, array_filter($results, fn ($item) => $item['count'] > 0));
+        }, array_filter($results ?? [], fn ($item) => $item['count'] > 0));
 
-        return $results;
+        return array_values($results);
     }
 }

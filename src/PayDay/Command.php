@@ -18,7 +18,7 @@ $results = Command::breakdownResults($payrol, $currency);
 $output = new ConsoleOutput;
 
 // payrol
-echo '**PAYROL**' . PHP_EOL;
+echo '**PAYROL SAMPLE**' . PHP_EOL;
 new Table($output)
     ->setHeaders(Command::payrolHeaders($currency))
     ->setRows(Command::payrolRows($payrol))
@@ -42,6 +42,7 @@ class Command
         return Currency::fromArray($currencies[$code]);
     }
 
+    /** @return array<int, array{employee: string, amount: float}> */
     public static function createPayrol(int $employeesNo): array
     {
         $payrol = [];
@@ -59,12 +60,17 @@ class Command
         return $payrol;
     }
 
+    /**
+     * @param  array<int, array{employee: string, amount: float}>  $payrol
+     * @return array<int, array{count: int, denomination: float, amount: float, type: string}> $results
+     * */
     public static function breakdownResults(array $payrol, Currency $currency): array
     {
         return new Cash($currency)
             ->breakdownCollection($payrol);
     }
 
+    /** @return array<int, TableCell> */
     public static function breakdownHeaders(Currency $currency): array
     {
         return [
@@ -83,6 +89,10 @@ class Command
         ];
     }
 
+    /**
+     * @param  array<int, array{count: int, denomination: float, amount: float, type: string}>  $results
+     * @return array<int, array<int, string|TableCell>|TableSeparator>
+     */
     public static function breakdownRows(array $results): array
     {
         $total = 0;
@@ -123,6 +133,7 @@ class Command
         return $rows;
     }
 
+    /** @return array<int, TableCell> */
     public static function payrolHeaders(Currency $currency): array
     {
         return [
@@ -135,6 +146,10 @@ class Command
         ];
     }
 
+    /**
+     * @param  array<int, array{employee: string, amount: float}>  $payrol
+     * @return array<int, array<int, string|TableCell>|TableSeparator>
+     */
     public static function payrolRows(array $payrol): array
     {
         $total = 0;
