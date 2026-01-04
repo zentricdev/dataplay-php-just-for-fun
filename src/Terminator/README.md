@@ -8,9 +8,9 @@ This directory houses a **functional blueprint** that emulates the "Terminator" 
 
 ## Thematic Context
 
-Inspired by the 1984 film _The Terminator_, the simulation features the artificial superintelligence **SkyNet** (`Core.php`), which builds and deploys an infiltration unit known as **Terminator** (`Terminator.php`). The unit is sent to a specific spatio-temporal coordinate to eliminate its primary target: **Sarah Connor**.
+Inspired by the 1984 film _The Terminator_, the simulation features the artificial superintelligence **SkyNet** (`Skynet.php`), which builds and deploys an infiltration unit known as **T-800** (`T800.php`). The unit is sent to a specific spatio-temporal coordinate to eliminate its primary target: **Sarah Connor**.
 
-The `Command.php` file serves as the entry point, where the Terminator is instantiated, assigned its target, and ordered to fulfill its mission.
+The `Command.php` file serves as the entry point, where the T-800 is instantiated, assigned its target, and ordered to fulfill its mission.
 
 ## PHP Concepts Illustrated
 
@@ -18,13 +18,13 @@ This project leverages several design patterns and modern PHP features (8.1+).
 
 ### 1. Abstract Classes and Inheritance
 
-- **`Core.php`**: Defined as an `abstract class`. It cannot be instantiated directly but establishes the system's foundation, containing fundamental constants like the corporation (`Cyberdyne Systems`) and versioning, under the playful assumption that SkyNet is developed in a future **PHP 11.4** environment.
+- **`Skynet.php`**: Defined as an `abstract class`. It cannot be instantiated directly but establishes the system's foundation, containing fundamental constants like the corporation (`Cyberdyne Systems`) and versioning, under the playful assumption that SkyNet is developed in a future **PHP 11.4** environment.
 
-- **`Terminator.php`**: Inherits from `Core` (`extends Core`), specializing the base functionality for a combat unit.
+- **`T800.php`**: Inherits from `Skynet` (`extends Skynet`), specializing the base functionality for a combat unit.
 
 ### 2. Final Classes
 
-- **`Terminator.php`**, DTOs, and the `SkyNetException` are declared as `final`. This prevents further inheritance, ensuring the implementation remains immutable and unique, a best practice for domain-specific logic.
+- **`T800.php`**, DTOs, and the `SkyNetException` are declared as `final`. This prevents further inheritance, ensuring the implementation remains immutable and unique, a best practice for domain-specific logic.
 
 ### 3. Data Transfer Objects (DTOs) and Readonly Classes
 
@@ -40,7 +40,7 @@ To ensure data integrity, the project utilizes immutable DTOs:
 
 ### 4. Builder Pattern & Fluent Interface
 
-- The `Terminator` class implements a variant of the **Builder pattern**. Methods like `setTarget()` and `relocate()` return `$this`, allowing for a **Fluent Interface**. This results in highly readable code within `Command.php`.
+- The `T800` class implements a variant of the **Builder pattern**. Methods like `setTarget()` and `relocate()` return `$this`, allowing for a **Fluent Interface**. This results in highly readable code within `Command.php`.
 
 ### 5. Recursion and Static State Persistence
 
@@ -58,7 +58,7 @@ To ensure data integrity, the project utilizes immutable DTOs:
 
 - **Dynamic Timeline Adjustment**: The `relocate()` method performs a crucial internal state change. When the Terminator is displaced, the system's internal clock synchronizes with the target's timeline (`$this->timeline = $this->target->location->timeline`). This is reflected in the execution logs, where you can observe the jump from the origin date in 2029 to the target's arrival date in 1984, simulating a real-time temporal displacement.
 
-- **Technical Note on Logging**: The `log()` method operates independently of the host's system time. Instead, it calculates timestamps by combining the internal `$timeline` propert, initialized at the moment of deployment (July 11, 2029), with the `$missionClock`. This clock captures the exact `microtime()` of the mission's start, allowing the system to offset the future date by the actual elapsed seconds of the operation. This ensures that logs remain chronologically consistent with the movie's canon, even as the unit transitions from the future to the past during the `relocate()` sequence.
+- **Technical Note on Logging**: The `Logger` class operates independently of the host's system time. Instead, it calculates timestamps by combining the internal `$timeline` property, initialized at the moment of deployment (July 11, 2029), with the `$timelineClock`. This clock captures the exact `microtime()` of the timeline's start, allowing the system to offset the future date by the actual elapsed seconds of the operation. This ensures that logs remain chronologically consistent with the movie's canon, even as the unit transitions from the future to the past during the `relocate()` sequence.
 
 ### 8. Timeline Divergence & Persistence
 
@@ -66,13 +66,18 @@ While the films often depict the Terminator's failure, this simulation reflects 
 
 The use of **static variables within recursion** allows the unit to track its attempts across these temporal loops. If a mission fails (`random_int` simulation), the unit triggers an "I'll be back" exception and re-executes. From SkyNet's perspective, the mission is only complete when the target is null, meaning the simulation will persist until it finds the specific timeline where the Terminator successfully eliminates the target.
 
+### 9. Logging System
+
+The `Logger` class provides a timeline-synchronized logging mechanism. It maintains an internal timeline and mission clock, calculating timestamps by offsetting the starting date with elapsed seconds. Messages are stored in an array with precise timestamps and output to the console with ANSI color codes for improved readability. This ensures logs remain consistent with the simulation's fictional chronology, even during temporal displacements.
+
 ## File Breakdown
 
 - **`Command.php`**: The main execution script.
 
-- **`Core.php`**: The abstract base defining SkyNet's core attributes.
-
-- **`Terminator.php`**: The T-800 implementation containing the mission logic.
+- **`Models/`**:
+  - `Skynet.php`: The abstract base defining SkyNet's core attributes.
+  - `T800.php`: The T-800 implementation containing the mission logic.
+  - `Logger.php`: Timeline-synchronized logging system with colored output.
 
 - **`DTOs/`**:
 

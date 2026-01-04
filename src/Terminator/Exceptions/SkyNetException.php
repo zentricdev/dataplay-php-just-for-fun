@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace J4F\SkyNet\Exceptions;
+namespace J4F\Terminator\Exceptions;
 
 final class SkyNetException extends \Exception
 {

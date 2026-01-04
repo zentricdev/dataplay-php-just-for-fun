@@ -16,7 +16,7 @@ phpstan:
 
 terminator:
 	@echo
-	@php ./src/SkyNet/Command.php
+	@php ./src/Terminator/Command.php
 	@echo
 
 payday:

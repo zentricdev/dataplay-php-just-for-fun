@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace J4F\SkyNet\DTOs;
+namespace J4F\Terminator\DTOs;
 
 use DateTime;
 

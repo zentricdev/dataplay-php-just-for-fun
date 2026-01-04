@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace J4F\SkyNet;
+namespace J4F\Terminator;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use DateTime;
 use DateTimeZone;
-use J4F\SkyNet\DTOs\SpatioTemporalLocation;
-use J4F\SkyNet\DTOs\Target;
+use J4F\Terminator\DTOs\SpatioTemporalLocation;
+use J4F\Terminator\DTOs\Target;
+use J4F\Terminator\Models\T800;
 
-Terminator::build()
+T800::build()
     ->setTarget(target: new Target(
         name: 'Sarah Connor',
         yearOfBirth: 1965,
